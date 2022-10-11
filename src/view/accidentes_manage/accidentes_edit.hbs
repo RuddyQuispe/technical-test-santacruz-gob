@@ -1,0 +1,47 @@
+<div class="card mx-auto col-lg-6 bg-dark mb-3 text-light">
+    <div class="card-header">
+        Editar Sector
+    </div>
+    <form action="/accidentes_manage/update/{{accidente_to_edite.acc_id}}?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="input-group mb-3">
+            <input type="date" id="fecha" class="form-control" required name="fecha" placeholder="fecha"
+                value={{accidente_to_edite.acc_fecha}}>
+        </div>
+        <h5 class="card-subtitle">Severidad: {{accidente_to_edite.acc_severidad}}</h5>
+        <div class="input-group mb-3">
+            <select name="severidad" id="severidad" class="form-control">
+                <option value="simple">simple</option>
+                <option value="grave">grave</option>
+            </select>
+        </div>
+        <h5 class="card-subtitle">Empleado: {{accidente_to_edite.emp_nombre}}</h5>
+        <div class="input-group mb-3">
+            <select name="id_empleado" id="id_empleado" class="form-control" value="{{accidente_to_edite.emp_nombre}}">
+                {{#each empleados}}
+                <option value="{{emp_id}}">{{emp_nombre}} {{emp_apellido}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <h5 class="card-subtitle">Sector: {{accidente_to_edite.sector_desc}}</h5>
+        <div class="input-group mb-3">
+            <select name="id_sector" id="id_sector" class="form-control">
+                {{#each sectores}}
+                <option value="{{sector_id}}">{{sector_desc}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <h5 class="card-subtitle">Tipo Accidente: {{accidente_to_edite.ta_desc}}</h5>
+        <div class="input-group mb-3">
+            <select name="id_tipo_accidente" id="id_tipo_accidente" class="form-control">
+                {{#each tiposAccidentes}}
+                <option value="{{ta_id}}">{{ta_desc}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">
+            Registrar Accidente
+        </button>
+        <a href="../all" class="btn btn-outline-danger"> Cancelar Cambios</a>
+    </form>
+</div>

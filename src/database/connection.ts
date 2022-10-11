@@ -37,7 +37,7 @@ export class Connection {
             let result: QueryResult = await this.session.query(sqlQuery);
             return result;
         } catch (error) {
-            throw new Error("\x1b[41m \x1b[37m ERROR IN EXECUTE SQL QUERY \x1b[0m");
+            throw new Error("ERROR IN EXECUTE SQL QUERY " + error);
         }
     }
 }

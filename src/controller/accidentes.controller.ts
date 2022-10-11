@@ -27,8 +27,8 @@ export class AccidentesController {
     }
 
     public store = async (request: Request, response: Response): Promise<void> => {
-        let { fecha, severidad, id_empleado, id_sector, id_tipoAccidente } = request.body;
-        let created = await this.accidentesModel.create(fecha, severidad, id_empleado, id_sector, id_tipoAccidente);
+        let { fecha, severidad, id_empleado, id_sector, id_tipo_accidente } = request.body;
+        let created = await this.accidentesModel.create(fecha, severidad, id_empleado, id_sector, id_tipo_accidente);
         if (created) {
             await response.redirect('/accidentes_manage/all');
         } else {
@@ -45,7 +45,7 @@ export class AccidentesController {
             let sectores = await this.sectoresModel.findAll();
             let tiposAccidentes = await this.tiposAccidentesModel.findAll();
             response.status(200).render(
-                'accidentes_manage/accidentes_edit', { accidenteToEdite, sectores, tiposAccidentes, empleados });
+                'accidentes_manage/accidentes_edit', { accidente_to_edite: accidenteToEdite, sectores, tiposAccidentes, empleados });
         } else {
             response.render('error', { message_error: "ERROR" });
         }
@@ -53,9 +53,9 @@ export class AccidentesController {
 
     public update = async (request: Request, response: Response): Promise<void> => {
         let { id } = request.params;
-        let { fecha, severidad, idEmpleado, idSector, idTipoAccidente } = request.body;
+        let { fecha, severidad, id_empleado, id_sector, id_tipo_accidente } = request.body;
         let updated = await this.accidentesModel.update(
-            parseInt(id), fecha, severidad, idEmpleado, idSector, idTipoAccidente);
+            parseInt(id), fecha, severidad, id_empleado, id_sector, id_tipo_accidente);
         if (updated) {
             response.redirect('/accidentes_manage/all');
         } else {

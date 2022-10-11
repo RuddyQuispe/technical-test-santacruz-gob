@@ -1,0 +1,93 @@
+<div class="card mx-auto bg-dark mb-3 text-light col-lg-12">
+    <div class="card-header">
+        Gestion de Accidentes
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="card-title">Registrar Accidente</h5>
+                <br>
+                <form action="/accidentes_manage/store" method="POST">
+                    <h5 class="card-subtitle">fecha</h5>
+                    <div class="input-group mb-3">
+                        <input type="date" id="fecha" class="form-control" required name="fecha" placeholder="fecha">
+                    </div>
+                    <h5 class="card-subtitle">Severidad</h5>
+                    <div class="input-group mb-3">
+                        <select name="severidad" id="severidad" class="form-control">
+                            <option value="simple">simple</option>
+                            <option value="grave">grave</option>
+                        </select>
+                    </div>
+                    <h5 class="card-subtitle">Empleado</h5>
+                    <div class="input-group mb-3">
+                        <select name="id_empleado" id="id_empleado" class="form-control">
+                            {{#each empleados}}
+                            <option value="{{emp_id}}">{{emp_nombre}} {{emp_apellido}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <h5 class="card-subtitle">Sector</h5>
+                    <div class="input-group mb-3">
+                        <select name="id_sector" id="id_sector" class="form-control">
+                            {{#each sectores}}
+                            <option value="{{sector_id}}">{{sector_desc}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <h5 class="card-subtitle">Tipo Accidente</h5>
+                    <div class="input-group mb-3">
+                        <select name="id_tipo_accidente" id="id_tipo_accidente" class="form-control">
+                            {{#each tiposAccidentes}}
+                            <option value="{{ta_id}}">{{ta_desc}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">
+                        Registrar Accidente
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <h5 class="card-title">Lista de Sectores</h5>
+                <table class="table table-striped table-dark table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Severidad</th>
+                            <th>Empleado</th>
+                            <th>Sector</th>
+                            <th>Tipo Accidente</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each accidentes}}
+                        <tr>
+                            {{!-- acc_id,acc_fecha,acc_severidad,acc_emp_id,acc_sector_id,acc_ta_id --}}
+                            <th>{{acc_id}}</th>
+                            <th>{{acc_fecha}}</th>
+                            <th>{{acc_severidad}}</th>
+                            <th>{{emp_nombre}} {{emp_apellido}}</th>
+                            <th>{{sector_desc}}</th>
+                            <th>{{ta_desc}}</th>
+                            <td>
+                                <a href="/accidentes_manage/edit/{{acc_id}}" type="button"
+                                    class="btn btn-outline-warning btn-sm btn-xs">edit
+                                </a>
+                                <form action="/accidentes_manage/delete/{{acc_id}}?_method=DELETE" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-outline-danger btn-sm">
+                                        delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
