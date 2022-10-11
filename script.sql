@@ -47,7 +47,7 @@ create table empleados(
 );
 
 insert into empleados(emp_apellido, emp_nombre, emp_sexo, emp_fecnac, emp_fecing, emp_id_supervisor, emp_sector_id) values
-('chumacero','joaquin', true, '1990/01/03', '2019/05/16', null, 1),
+('chumacero','joaquin', true, '1990/01/03', '2019/05/16', null, 2),
 ('quispe','ruddy', false, '1980/03/15', '2021/06/30', 1,1),
 ('chavarria','marisol', true, '2000/10/20', '2022/05/3', null, 1);
 
@@ -81,11 +81,12 @@ insert into accidentes (acc_fecha, acc_severidad, acc_emp_id, acc_sector_id, acc
 create or replace function lista_igualxacci(first_param date, second_param date) 
 returns table(tipo_acc_id int, acc_desc text, cant_acc bigint)
 as $$ begin
-	return query select ta.ta_id, ta.ta_desc, count(distinct a.acc_id) 
+	return query select ta.ta_id, ta.ta_desc, count(distinct a.acc_id) as cant_accidentes
 			from tipos_accidentes ta, accidentes a, sectores s
 			where ta.ta_id=a.acc_ta_id and a.acc_emp_id=s.sector_id and s.sector_id=a.acc_sector_id  
 				and first_param <= a.acc_fecha and a.acc_fecha  <= second_param 
-			group by ta.ta_id, ta.ta_desc;
+			group by ta.ta_id, ta.ta_desc
+			order by cant_accidentes;
 end $$ language plpgsql;
 
 -- ejecucion de la funcion con formato de fecha YYYY/MM/DD
